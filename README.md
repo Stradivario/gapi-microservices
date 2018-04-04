@@ -20,7 +20,7 @@ $ npm install @gapi/microservices --save
 ```typescript
 
 import { GapiModule } from '@gapi/core';
-import { GapiMicroserviceModule } from '@gapi/sequelize';
+import { GapiMicroserviceModule } from '@gapi/microservices';
 
 @GapiModule({
     imports: [
