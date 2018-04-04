@@ -1,0 +1,36 @@
+{
+  "name": "@gapi/microservices",
+  "version": "0.7.135",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Stradivario/gapi-microservices.git"
+  },
+  "scripts": {
+    "postpublish": "git push ssh://git@gitlab.youvolio.com:522/gapi/microservices.git && git push --tags && git push ssh://git@gitlab.youvolio.com:522/gapi/microservices.git --tags"
+  },
+  "author": {
+    "name": "Kristian Tachev(Stradivario)",
+    "email": "kristiqn.tachev@gmail.com"
+  },
+  "keywords": [
+    "graphql",
+    "gapi",
+    "node"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "http://gitlab.youvolio.com/gapi/microservices/issues"
+  },
+  "module": "gapi-microservices-module.js",
+  "typings": "gapi-microservices-module.d.ts",
+  "peerDependencies": {
+    "@gapi/core": "^0.7.133"
+  },
+  "dependencies": {
+    "apollo-link-http": "^1.5.3",
+    "graphql-tools": "^2.23.1"
+  },
+  "devDependencies": {
+    "@gapi/core": "^0.7.133"
+  }
+}
