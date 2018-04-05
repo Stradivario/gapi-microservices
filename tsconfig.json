@@ -21,6 +21,9 @@
     "skipLibCheck": true,
     "types": []
   },
+  "exclude": [
+    "node_modules"
+  ],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,

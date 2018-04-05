@@ -2,25 +2,11 @@ import { GapiModule, Container, Token, GapiServerModule, ConfigService } from "@
 import { ProxyService } from "./proxy.service";
 import { MicroserviceInterface } from './microservice.interface';
 
-const defaultConfig = [
-    {name: 'microservice1', link: 'http://localhost:10000/graphql'},
-    {name: 'microservice2', link: 'http://localhost:10001/graphql'}
-];
-
-@GapiModule({
-    imports: [
-        GapiServerModule.forRoot({
-            ...Container.get(ConfigService).APP_CONFIG,
-            schema: Container.get(ProxyService).getSchemaIntrospection()
-        })
-    ],
-    services: [
-        ProxyService
-    ]
-})
+@GapiModule({})
 export class GapiMicroserviceModule {
-    static forRoot(microservices: MicroserviceInterface[] = defaultConfig) {
-        Container.set('gapi-microservice-config', microservices)
+    static forRoot(microservices: MicroserviceInterface[]) {
+        Container.set('gapi-microservice-config', microservices);
+        Container.get(ConfigService).APP_CONFIG.schema = Container.get(ProxyService).getSchemaIntrospection();
         return GapiMicroserviceModule;
     }
 }

@@ -11,25 +11,15 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@gapi/core");
 const proxy_service_1 = require("./proxy.service");
-const defaultConfig = [
-    { name: 'microservice1', link: 'http://localhost:10000/graphql' },
-    { name: 'microservice2', link: 'http://localhost:10001/graphql' }
-];
 let GapiMicroserviceModule = GapiMicroserviceModule_1 = class GapiMicroserviceModule {
-    static forRoot(microservices = defaultConfig) {
+    static forRoot(microservices) {
         core_1.Container.set('gapi-microservice-config', microservices);
+        core_1.Container.get(core_1.ConfigService).APP_CONFIG.schema = core_1.Container.get(proxy_service_1.ProxyService).getSchemaIntrospection();
         return GapiMicroserviceModule_1;
     }
 };
 GapiMicroserviceModule = GapiMicroserviceModule_1 = __decorate([
-    core_1.GapiModule({
-        imports: [
-            core_1.GapiServerModule.forRoot(Object.assign({}, core_1.Container.get(core_1.ConfigService).APP_CONFIG, { schema: core_1.Container.get(proxy_service_1.ProxyService).getSchemaIntrospection() }))
-        ],
-        services: [
-            proxy_service_1.ProxyService
-        ]
-    })
+    core_1.GapiModule({})
 ], GapiMicroserviceModule);
 exports.GapiMicroserviceModule = GapiMicroserviceModule;
 __export(require("./proxy.service"));
