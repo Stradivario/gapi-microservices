@@ -25,23 +25,29 @@ const graphql_tools_1 = require("graphql-tools");
 const apollo_link_http_1 = require("apollo-link-http");
 const fetch = require('node-fetch');
 let ProxyService = class ProxyService {
-    constructor(microservices) {
+    constructor(microservices, authService) {
         this.microservices = microservices;
+        this.authService = authService;
     }
     getSchemaIntrospection() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.mergeSchemas(yield Promise.all(this.microservices.map(ep => {
                 console.log(`Microservice: ${ep.name} loaded!`);
-                return this.getIntrospectSchema(ep.link);
+                return this.getIntrospectSchema(ep);
             })));
         });
     }
     mergeSchemas(allSchemas) {
         return graphql_tools_1.mergeSchemas({ schemas: allSchemas });
     }
-    getIntrospectSchema(uri) {
+    getIntrospectSchema(microservice) {
         return __awaiter(this, void 0, void 0, function* () {
-            const makeDatabaseServiceLink = () => apollo_link_http_1.createHttpLink({ uri, fetch });
+            const authorizationToken = this.authService.sign({
+                email: microservice.name,
+                id: -1,
+                scope: ['ADMIN']
+            });
+            const makeDatabaseServiceLink = () => apollo_link_http_1.createHttpLink({ uri: microservice.link, fetch, headers: { authorization: authorizationToken } });
             return graphql_tools_1.makeRemoteExecutableSchema({ schema: yield graphql_tools_1.introspectSchema(makeDatabaseServiceLink()), link: makeDatabaseServiceLink() });
         });
     }
@@ -49,6 +55,6 @@ let ProxyService = class ProxyService {
 ProxyService = __decorate([
     core_1.Service(),
     __param(0, core_1.Inject('gapi-microservice-config')),
-    __metadata("design:paramtypes", [Array])
+    __metadata("design:paramtypes", [Array, core_1.AuthService])
 ], ProxyService);
 exports.ProxyService = ProxyService;
