@@ -15,7 +15,10 @@ let GapiMicroserviceModule = GapiMicroserviceModule_1 = class GapiMicroserviceMo
     static forRoot(microservices) {
         core_1.Container.set('gapi-microservice-config', microservices);
         core_1.Container.get(core_1.ConfigService).APP_CONFIG.schema = core_1.Container.get(proxy_service_1.ProxyService).getSchemaIntrospection();
-        return GapiMicroserviceModule_1;
+        return {
+            gapiModule: GapiMicroserviceModule_1,
+            services: []
+        };
     }
 };
 GapiMicroserviceModule = GapiMicroserviceModule_1 = __decorate([
