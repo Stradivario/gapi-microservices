@@ -24,13 +24,13 @@
   "module": "gapi-microservices-module.js",
   "typings": "gapi-microservices-module.d.ts",
   "peerDependencies": {
-    "@gapi/core": "^0.7.206"
+    "@gapi/core": "^0.7.208"
   },
   "dependencies": {
     "apollo-link-http": "^1.5.3",
     "graphql-tools": "^2.23.1"
   },
   "devDependencies": {
-    "@gapi/core": "^0.7.206"
+    "@gapi/core": "^0.7.208"
   }
 }
