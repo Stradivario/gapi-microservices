@@ -6,7 +6,7 @@
     "url": "https://github.com/Stradivario/gapi-microservices.git"
   },
   "scripts": {
-    "postpublish": "git push ssh://git@gitlab.youvolio.com:522/gapi/microservices.git && git push --tags && git push ssh://git@gitlab.youvolio.com:522/gapi/microservices.git --tags"
+    "postpublish": "git push -f ssh://git@gitlab.youvolio.com:522/gapi/microservices.git && git push --tags && git push ssh://git@gitlab.youvolio.com:522/gapi/microservices.git --tags"
   },
   "author": {
     "name": "Kristian Tachev(Stradivario)",
