@@ -1,15 +1,16 @@
-import { AuthService, Service, Inject, GraphQLSchema, GapiServerModule, Container, ConfigService } from '@gapi/core';
+import { Service, Inject, Container } from '@rxdi/core';
 import { mergeSchemas, introspectSchema, makeRemoteExecutableSchema } from 'graphql-tools';
 import { createHttpLink } from 'apollo-link-http';
 import { MicroserviceInterface } from './microservice.interface';
-const fetch = require('node-fetch');
+import fetch = require('node-fetch');
+import { GraphQLSchema } from 'graphql';
 
 @Service()
 export class ProxyService {
 
   constructor(
     @Inject('gapi-microservice-config') private microservices: MicroserviceInterface[],
-    private authService: AuthService
+    @Inject('gapi-microservice-config-auth') private configAuth: {authorization?: Function}
   ) {}
 
   public async getSchemaIntrospection(): Promise<GraphQLSchema> {
@@ -24,12 +25,16 @@ export class ProxyService {
   }
 
   private async getIntrospectSchema(microservice: MicroserviceInterface): Promise<GraphQLSchema> {
-    const authorizationToken = this.authService.sign({
-      email: microservice.name,
-      id: -1,
-      scope: ['ADMIN']
-    });
-    const makeDatabaseServiceLink = () => createHttpLink({ uri: microservice.link, fetch, headers: {authorization: authorizationToken} });
+    const headers = {authorization: ''};
+    if (this.configAuth.authorization) {
+      const Authorization = Container.get<{sign: (params) => string}>(this.configAuth.authorization);
+      headers.authorization = Authorization.sign({
+        email: microservice.name,
+        id: -1,
+        scope: ['ADMIN']
+      });
+    }
+    const makeDatabaseServiceLink = () => createHttpLink({ uri: microservice.link, fetch, headers });
     return makeRemoteExecutableSchema({ schema: await introspectSchema(makeDatabaseServiceLink()), link: makeDatabaseServiceLink() });
   }
 

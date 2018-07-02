@@ -1,9 +1,11 @@
-import { AuthService, GraphQLSchema } from '@gapi/core';
 import { MicroserviceInterface } from './microservice.interface';
+import { GraphQLSchema } from 'graphql';
 export declare class ProxyService {
     private microservices;
-    private authService;
-    constructor(microservices: MicroserviceInterface[], authService: AuthService);
+    private configAuth;
+    constructor(microservices: MicroserviceInterface[], configAuth: {
+        authorization?: Function;
+    });
     getSchemaIntrospection(): Promise<GraphQLSchema>;
     private mergeSchemas(allSchemas);
     private getIntrospectSchema(microservice);

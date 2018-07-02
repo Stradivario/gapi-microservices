@@ -20,14 +20,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@gapi/core");
+const core_1 = require("@rxdi/core");
 const graphql_tools_1 = require("graphql-tools");
 const apollo_link_http_1 = require("apollo-link-http");
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 let ProxyService = class ProxyService {
-    constructor(microservices, authService) {
+    constructor(microservices, configAuth) {
         this.microservices = microservices;
-        this.authService = authService;
+        this.configAuth = configAuth;
     }
     getSchemaIntrospection() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -42,12 +42,16 @@ let ProxyService = class ProxyService {
     }
     getIntrospectSchema(microservice) {
         return __awaiter(this, void 0, void 0, function* () {
-            const authorizationToken = this.authService.sign({
-                email: microservice.name,
-                id: -1,
-                scope: ['ADMIN']
-            });
-            const makeDatabaseServiceLink = () => apollo_link_http_1.createHttpLink({ uri: microservice.link, fetch, headers: { authorization: authorizationToken } });
+            const headers = { authorization: '' };
+            if (this.configAuth.authorization) {
+                const Authorization = core_1.Container.get(this.configAuth.authorization);
+                headers.authorization = Authorization.sign({
+                    email: microservice.name,
+                    id: -1,
+                    scope: ['ADMIN']
+                });
+            }
+            const makeDatabaseServiceLink = () => apollo_link_http_1.createHttpLink({ uri: microservice.link, fetch, headers });
             return graphql_tools_1.makeRemoteExecutableSchema({ schema: yield graphql_tools_1.introspectSchema(makeDatabaseServiceLink()), link: makeDatabaseServiceLink() });
         });
     }
@@ -55,6 +59,7 @@ let ProxyService = class ProxyService {
 ProxyService = __decorate([
     core_1.Service(),
     __param(0, core_1.Inject('gapi-microservice-config')),
-    __metadata("design:paramtypes", [Array, core_1.AuthService])
+    __param(1, core_1.Inject('gapi-microservice-config-auth')),
+    __metadata("design:paramtypes", [Array, Object])
 ], ProxyService);
 exports.ProxyService = ProxyService;

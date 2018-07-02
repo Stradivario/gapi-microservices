@@ -24,13 +24,16 @@
   "module": "gapi-microservices-module.js",
   "typings": "gapi-microservices-module.d.ts",
   "peerDependencies": {
-    "@gapi/core": "^0.7.297"
+    "@rxdi/core": "^0.0.128"
   },
   "dependencies": {
     "apollo-link-http": "^1.5.3",
-    "graphql-tools": "^2.23.1"
+    "graphql-tools": "^2.23.1",
+    "node-fetch": "^2.1.2"
   },
   "devDependencies": {
-    "@gapi/core": "^0.7.297"
+    "@rxdi/core": "^0.0.128",
+    "@gapi/auth": "git+https://github.com/Stradivario/gapi-auth.git",
+    "@gapi/core": "git+https://github.com/Stradivario/gapi-core"
   }
 }

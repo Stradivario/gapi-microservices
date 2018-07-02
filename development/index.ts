@@ -1,15 +1,32 @@
-import { GapiModule, Container, Token, GapiServerModule, ConfigService, GapiModuleWithServices } from "@gapi/core";
+import { Module, ModuleWithServices } from "@rxdi/core";
 import { ProxyService } from "./proxy.service";
 import { MicroserviceInterface } from './microservice.interface';
 
-@GapiModule({})
-export class GapiMicroserviceModule {
-    static forRoot(microservices: MicroserviceInterface[]): GapiModuleWithServices {
-        Container.set('gapi-microservice-config', microservices);
-        Container.get(ConfigService).APP_CONFIG.schema = Container.get(ProxyService).getSchemaIntrospection();
+@Module()
+export class MicroserviceModule {
+    static forRoot(microservices: MicroserviceInterface[], config?: {authorization?: Function}): ModuleWithServices {
+        config ? config : config = {authorization: null};
         return {
-            gapiModule: GapiMicroserviceModule,
-            services: []
+            module: MicroserviceModule,
+            services: [
+                ProxyService,
+                {
+                    provide: 'gapi-microservice-config-auth',
+                    useValue: config
+                },
+                {
+                    provide: 'gapi-microservice-config',
+                    useValue: microservices
+                },
+                {
+                    provide: 'gapi-custom-schema-definition',
+                    lazy: true,
+                    deps: [ProxyService],
+                    useFactory: async (proxyService: ProxyService) => {
+                        return await proxyService.getSchemaIntrospection();
+                    }
+                }
+            ]
         };
     }
 }
