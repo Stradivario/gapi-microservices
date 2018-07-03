@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@rxdi/core": "^0.0.128",
-    "@gapi/auth": "git+https://github.com/Stradivario/gapi-auth.git",
-    "@gapi/core": "git+https://github.com/Stradivario/gapi-core"
+    "@gapi/auth": "^2.0.0",
+    "@gapi/core": "^2.0.0"
   }
 }
