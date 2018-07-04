@@ -24,7 +24,7 @@
   "module": "gapi-microservices-module.js",
   "typings": "gapi-microservices-module.d.ts",
   "peerDependencies": {
-    "@rxdi/core": "^0.0.157"
+    "@rxdi/core": "^0.0.160"
   },
   "dependencies": {
     "apollo-link-http": "^1.5.3",
@@ -32,7 +32,7 @@
     "node-fetch": "^2.1.2"
   },
   "devDependencies": {
-    "@rxdi/core": "^0.0.157",
+    "@rxdi/core": "^0.0.160",
     "@gapi/auth": "^1.0.17",
     "@gapi/core": "^1.0.17"
   }
