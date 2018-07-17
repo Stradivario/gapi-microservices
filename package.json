@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@rxdi/core": "^0.0.177",
-    "@gapi/auth": "^1.1.0",
-    "@gapi/core": "^1.1.0"
+    "@gapi/auth": "^1.2.1",
+    "@gapi/core": "^1.2.1"
   }
 }
