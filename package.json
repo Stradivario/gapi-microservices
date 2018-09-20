@@ -1,6 +1,6 @@
 {
   "name": "@gapi/microservices",
-  "version": "1.4.14",
+  "version": "1.4.15",
   "repository": {
     "type": "git",
     "url": "https://github.com/Stradivario/gapi-microservices.git"
