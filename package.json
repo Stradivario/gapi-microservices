@@ -29,7 +29,7 @@
     "node-fetch": "^2.1.2"
   },
   "devDependencies": {
-    "@rxdi/core": "^0.0.299",
+    "@rxdi/core": "^0.0.341",
     "@gapi/auth": "^1.4.23",
     "@gapi/core": "^1.4.23"
   }
