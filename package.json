@@ -30,8 +30,8 @@
   },
   "devDependencies": {
     "@rxdi/core": "0.7.37",
-    "@gapi/auth": "^1.8.18",
-    "@gapi/core": "^1.8.18",
+    "@gapi/auth": "^1.8.20",
+    "@gapi/core": "^1.8.20",
     "@types/graphql": "^14.5.0",
     "graphql": "^14.5.8"
   }
